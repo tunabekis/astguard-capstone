@@ -64,4 +64,260 @@
 
     .btn-download:hover {
       background: #172554;
-      border-color: #1725
+      border-color: #172554;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+    }
+
+    /* Academic Paper Card */
+    .paper-sheet {
+      background-color: var(--paper-bg);
+      border: 1px solid #e2e8f0;
+      border-radius: 4px;
+      width: 100%;
+      max-width: 820px;
+      padding: 64px 72px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
+    }
+
+    .doc-header {
+      border-bottom: 2px solid var(--text-primary);
+      padding-bottom: 24px;
+      margin-bottom: 28px;
+    }
+
+    .doc-kicker {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 700;
+      color: var(--accent-navy);
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      line-height: 1.35;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+    }
+
+    .submission-meta {
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+    }
+
+    .submission-meta strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    /* Meta Table / Grid */
+    .meta-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 36px;
+      font-size: 0.92rem;
+    }
+
+    .meta-table tr {
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .meta-table tr:first-child {
+      border-top: 1px solid var(--border-color);
+    }
+
+    .meta-label {
+      width: 25%;
+      padding: 12px 14px 12px 0;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      vertical-align: top;
+    }
+
+    .meta-value {
+      width: 75%;
+      padding: 12px 0;
+      color: var(--text-primary);
+    }
+
+    .meta-value a {
+      color: var(--accent-navy);
+      text-decoration: underline;
+      font-weight: 500;
+    }
+
+    .meta-value a:hover {
+      color: var(--accent-blue);
+    }
+
+    .members-list {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .members-list li {
+      font-weight: 500;
+    }
+
+    .placeholder-text {
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    /* Section Content */
+    .section-heading {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 8px;
+      margin-bottom: 18px;
+      letter-spacing: -0.01em;
+    }
+
+    .description-body {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 0.95rem;
+      font-weight: 300;
+      line-height: 1.85;
+      color: #1e293b;
+      text-align: justify;
+    }
+
+    .description-body p {
+      margin-bottom: 18px;
+    }
+
+    .description-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    .description-body strong {
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    /* Print Styles (Pure Paper Output) */
+    @media print {
+      body {
+        background-color: #ffffff !important;
+        padding: 0 !important;
+      }
+      .top-bar {
+        display: none !important;
+      }
+      .paper-sheet {
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        max-width: 100% !important;
+      }
+      h1 {
+        font-size: 1.6rem !important;
+      }
+      .meta-table {
+        margin-bottom: 28px !important;
+      }
+      .description-body {
+        font-size: 0.9rem !important;
+        line-height: 1.75 !important;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .paper-sheet {
+        padding: 36px 24px;
+      }
+      .meta-label, .meta-value {
+        display: block;
+        width: 100%;
+        padding: 6px 0;
+      }
+      .meta-label {
+        padding-top: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-bar">
+    <button class="btn-download" onclick="window.print()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+        <polyline points="7 10 12 15 17 10"></polyline>
+        <line x1="12" y1="15" x2="12" y2="3"></line>
+      </svg>
+      Download as PDF
+    </button>
+  </div>
+
+  <main class="paper-sheet">
+    <header class="doc-header">
+      <div class="doc-kicker">Senior Design Project Proposal</div>
+      <h1>ASTGuard: Automated Software Supply Chain Backdoor Detection in Open-Source Java Libraries Using AST Analysis and Fine-Tuned Code Models</h1>
+      <div class="submission-meta">
+        Submitted to Course Coordinator: <strong>Dr. Özlem ALBAYRAK</strong>
+      </div>
+    </header>
+
+    <table class="meta-table">
+      <tbody>
+        <tr>
+          <td class="meta-label">Project URL</td>
+          <td class="meta-value">
+            <a href="https://tunabekis.github.io/astguard-capstone/" target="_blank">https://tunabekis.github.io/astguard-capstone/</a>
+          </td>
+        </tr>
+        <tr>
+          <td class="meta-label">Team Members</td>
+          <td class="meta-value">
+            <ul class="members-list">
+              <li>Tuna Bekiş</li>
+              <li>Emre Erdem</li>
+              <li>Şükrü Enes Tuğaç</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td class="meta-label">Supervisor</td>
+          <td class="meta-value">Elif Kurtaran Özbudak</td>
+        </tr>
+        <tr>
+          <td class="meta-label">Jury Members</td>
+          <td class="meta-value">
+            <!-- =================================================== -->
+            <!-- JURY MEMBERS UPDATE SECTION                         -->
+            <!-- Replace the text below once jury members are known: -->
+            <!-- =================================================== -->
+            <span class="placeholder-text">To be announced / Will be updated</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <section class="description-section">
+      <h2 class="section-heading">Project Description</h2>
+      <div class="description-body">
+        <p>
+          Modern software engineering heavily relies on third-party open-source components, which introduces significant software supply chain security risks. Conventional dependency auditing tools primarily cross-reference packages against databases of publicly disclosed vulnerabilities (CVEs), rendering them ineffective against zero-day supply chain attacks where malicious actors compromise upstream dependencies by injecting subtle backdoors, obfuscated logic, or unauthorized execution routines. <strong>ASTGuard</strong> addresses this critical security gap by establishing an automated static analysis engine specifically engineered to inspect open-source Java dependencies (JARs and Maven artifacts) prior to their integration into critical software codebases.
+        </p>
+        <p>
+          The system operates through a specialized hybrid pipeline. First, it parses source and decompiled bytecode into Abstract Syntax Trees (AST) using Java static analysis frameworks, isolating suspicious syntax sub-trees that exhibit high-risk operational behaviors such as dynamic reflection, runtime system execution, native process spawning, and anomalous socket transmissions. Second, rather than assessing entire codebases uniformly, ASTGuard extracts these targeted sub-trees along with library functional metadata and feeds them into a locally hosted, fine-tuned open-source code language model. By correlating syntactic intent with structural behavioral patterns, the model identifies zero-day backdoors, data exfiltration mechanisms, and unauthorized Command &amp; Control (C2) routines with high precision, ensuring strict data privacy and preventing automated dependency poisoning in enterprise environments.
+        </p>
+      </div>
+    </section>
+  </main>
+
+</body>
+</html>
