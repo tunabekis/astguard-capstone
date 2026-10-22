@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ASTGuard - Senior Design Capstone Project Proposal</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Inter Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: #0f172a;
+      color: #1e293b;
+    }
+    .code-font {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    
+    /* Paper simulation on screen */
+    .paper-sheet {
+      background: #ffffff;
+      width: 100%;
+      max-width: 210mm;
+      min-height: 297mm;
+      margin: 20px auto 40px auto;
+      padding: 16mm 18mm 14mm 18mm;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-radius: 4px;
+    }
+
+    /* Print & Native PDF Optimization */
+    @media print {
+      body {
+        background-color: #ffffff !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .paper-sheet {
+        margin: 0 !important;
+        padding: 12mm 15mm !important;
+        width: 100% !important;
+        max-width: none !important;
+        min-height: auto !important;
+        height: auto !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+      }
+      @page {
+        size: A4 portrait;
+        margin: 8mm 10mm;
+      }
+      *, *::before, *::after {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen text-slate-800 flex flex-col items-center">
+
+  <!-- Top Action Navigation Bar (Hidden during PDF export / printing) -->
+  <header class="no-print sticky top-0 z-50 w-full bg-slate-900/90 backdrop-blur-md border-b border-slate-700/80 px-4 py-3 shadow-lg">
+    <div class="max-w-4xl mx-auto flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center space-x-2">
+        <span class="inline-flex items-center justify-center w-8 h-8 rounded bg-sky-500/20 text-sky-400 font-bold text-sm border border-sky-500/40">
+          🛡️
+        </span>
+        <div>
+          <h1 class="text-sm font-semibold text-white tracking-wide">ASTGuard Proposal</h1>
+          <p class="text-xs text-slate-400">HAVELSAN SUİT & Capstone Project 2026</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <!-- Copy URL Button -->
+        <button id="copyBtn" onclick="copyProjectLink()" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-slate-300 bg-slate-800 hover:bg-slate-700 hover:text-white rounded-md border border-slate-600 transition shadow-sm active:scale-95">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+          </svg>
+          <span id="copyBtnText">Copy Web Link</span>
+        </button>
+
+        <!-- Download PDF / Print Button -->
+        <button onclick="triggerPrintPdf()" class="inline-flex items-center gap-1.5 px-4 py-1.5 text-xs font-semibold text-white bg-sky-600 hover:bg-sky-500 active:bg-sky-700 rounded-md transition shadow-md shadow-sky-900/20 active:scale-95">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+          </svg>
+          <span>Download as PDF</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Live Deployment Guide Callout (Hidden in Print) -->
+  <div class="no-print w-full max-w-4xl px-4 mt-4">
+    <div class="bg-slate-800/80 border border-slate-700 rounded-lg p-3 text-xs text-slate-300 flex items-center justify-between">
+      <div class="flex items-center space-x-2">
+        <span class="text-amber-400 font-bold">ℹ️ Note:</span>
+        <span>Once pushed to GitHub Pages, this page URL can be pasted into the placeholder below. Click <strong>Download as PDF</strong> to generate the submission file.</span>
+      </div>
+      <span class="text-slate-400 code-font hidden sm:inline">github.io ready</span>
+    </div>
+  </div>
+
+  <!-- Document Paper Canvas -->
+  <main class="w-full px-2 sm:px-4 flex justify-center">
+    <article class="paper-sheet text-slate-800">
+      
+      <!-- Top Content Block -->
+      <div class="space-y-4">
+        
+        <!-- Header Masthead -->
+        <header class="border-b-2 border-slate-900 pb-3">
+          <div class="flex justify-between items-start">
+            <div>
+              <p class="text-[9pt] font-bold tracking-wider uppercase text-slate-500">Senior Design Capstone Project • Project Proposal</p>
+              <h1 class="text-[17pt] font-extrabold text-slate-950 leading-tight mt-1">ASTGuard: Supply Chain Backdoor Detection</h1>
+              <p class="text-[9.5pt] font-semibold text-sky-700 mt-0.5">Automated Backdoor Identification in Open-Source Java Libraries via AST Parsing & Fine-Tuned Code Models</p>
+            </div>
+            <div class="text-right hidden sm:block">
+              <span class="inline-block bg-slate-100 border border-slate-300 text-slate-700 text-[8pt] font-bold px-2 py-1 rounded tracking-tight">
+                HAVELSAN SUİT CANDIDATE
+              </span>
+            </div>
+          </div>
+        </header>
+
+        <!-- Metadata Information Box -->
+        <div class="bg-slate-50/80 border border-slate-200 rounded p-3 text-[9pt] leading-relaxed">
+          <table class="w-full border-collapse">
+            <tbody>
+              <tr class="border-b border-slate-200/60">
+                <td class="w-36 py-1 font-bold text-slate-700 align-top">Course Coordinator:</td>
+                <td class="py-1 text-slate-900 font-medium">Dr. Özlem ALBAYRAK</td>
+              </tr>
+              <tr class="border-b border-slate-200/60">
+                <td class="py-1 font-bold text-slate-700 align-top">Project Name:</td>
+                <td class="py-1 text-slate-900 font-semibold">
+                  ASTGuard: Automated Software Supply Chain Backdoor Detection in Open-Source Java Libraries Using AST Analysis and Fine-Tuned Code Models
+                </td>
+              </tr>
+              <tr class="border-b border-slate-200/60">
+                <td class="py-1 font-bold text-slate-700 align-top">Project Web Page:</td>
+                <td class="py-1 text-sky-700 code-font text-[8.5pt]">
+                  <span id="currentUrlPlaceholder">[Will be automatically updated upon deployment / INSERT_URL]</span>
+                </td>
+              </tr>
+              <tr class="border-b border-slate-200/60">
+                <td class="py-1 font-bold text-slate-700 align-top">Team Members:</td>
+                <td class="py-1 text-slate-900">
+                  <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 font-medium">
+                    <span>• Tuna Bekiş</span>
+                    <span>• Emre Erdem</span>
+                    <span>• Şükrü Enes Tuğaç</span>
+                  </div>
+                </td>
+              </tr>
+              <tr class="border-b border-slate-200/60">
+                <td class="py-1 font-bold text-slate-700 align-top">Supervisor:</td>
+                <td class="py-1 text-slate-900 font-medium">Elif Kurtaran Özbudak</td>
+              </tr>
+              <tr>
+                <td class="py-1 font-bold text-slate-700 align-top">Jury Members:</td>
+                <td class="py-1 text-slate-500 italic">
+                  [To be announced / Will be updated tomorrow upon notification]
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Project Description Paragraphs -->
+        <section class="space-y-3 pt-1">
+          <h2 class="text-[10.5pt] font-bold uppercase tracking-wider text-slate-900 border-b border-slate-200 pb-1 flex items-center justify-between">
+            <span>Project Description</span>
+            <span class="text-[8pt] text-slate-400 font-normal lowercase tracking-normal">software supply chain security</span>
+          </h2>
+          
+          <p class="text-[9.2pt] text-slate-700 leading-relaxed text-justify">
+            Modern enterprise systems and mission-critical defense infrastructures heavily incorporate third-party and open-source software libraries, inadvertently creating massive exposure to high-impact software supply chain compromises. Contemporary Software Composition Analysis (SCA) solutions depend on historical Common Vulnerabilities and Exposures (CVE) databases. Consequently, they fail to safeguard development pipelines against zero-day malicious additions, sophisticated stealth backdoors, and covert Command-and-Control (C2) communication channels embedded into reputable dependencies. The <strong>ASTGuard</strong> project aims to architect and validate an automated, privacy-preserving static security framework engineered to discover intentional backdoor semantics and supply chain tampering in Java libraries before package deployment.
+          </p>
+
+          <p class="text-[9.2pt] text-slate-700 leading-relaxed text-justify">
+            Rather than relying on vulnerable, non-compliant third-party cloud APIs or shallow string heuristics, ASTGuard implements a two-stage deterministic analysis pipeline. First, an Abstract Syntax Tree (AST) engine built on <em>JavaParser</em> prunes large codebases down to security-sensitive execution nodes—isolating raw network socket instantiations, operating system command invocations (<span class="code-font text-[8.5pt] text-slate-800">ProcessBuilder</span>, <span class="code-font text-[8.5pt] text-slate-800">Runtime.exec</span>), and dynamic class reflection mechanisms (<span class="code-font text-[8.5pt] text-slate-800">Class.forName</span>, <span class="code-font text-[8.5pt] text-slate-800">Method.invoke</span>). Second, these isolated code sub-trees and their structural context are classified by an on-premises, fine-tuned open-source code model (such as DeepSeek-Coder or CodeLlama). This hybrid design eliminates intellectual property leaks in air-gapped environments while dramatically suppressing false positives through structural code intelligence.
+          </p>
+        </section>
+
+        <!-- Technical Pillars Cards -->
+        <section class="pt-1">
+          <h3 class="text-[9.5pt] font-bold uppercase tracking-wider text-slate-900 border-b border-slate-200 pb-1 mb-2.5">
+            Key Architectural Innovations
+          </h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <div class="border border-slate-200 bg-white p-2.5 rounded-sm border-l-4 border-l-sky-600 shadow-xs">
+              <h4 class="text-[8.8pt] font-bold text-slate-900">AST Syntax-Aware Sink Pruning</h4>
+              <p class="text-[8.2pt] text-slate-600 leading-normal mt-0.5">
+                Converts raw Java source trees into contextual graphs to pinpoint remote socket bindings, obfuscated strings, and anomalous OS execution paths.
+              </p>
+            </div>
+            <div class="border border-slate-200 bg-white p-2.5 rounded-sm border-l-4 border-l-indigo-600 shadow-xs">
+              <h4 class="text-[8.8pt] font-bold text-slate-900">Air-Gapped On-Premises Inference</h4>
+              <p class="text-[8.2pt] text-slate-600 leading-normal mt-0.5">
+                Fine-tunes lightweight code LLMs for local evaluation, fulfilling defense-industry compliance with zero external data exfiltration.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Technology Pills -->
+        <div class="flex flex-wrap gap-1.5 pt-1">
+          <span class="px-2 py-0.5 bg-slate-100 text-slate-700 text-[8pt] font-medium rounded border border-slate-200">Software Supply Chain Security</span>
+          <span class="px-2 py-0.5 bg-sky-50 text-sky-800 text-[8pt] font-medium rounded border border-sky-200">JavaParser AST</span>
+          <span class="px-2 py-0.5 bg-indigo-50 text-indigo-800 text-[8pt] font-medium rounded border border-indigo-200">Fine-Tuned Local LLMs</span>
+          <span class="px-2 py-0.5 bg-amber-50 text-amber-800 text-[8pt] font-medium rounded border border-amber-200">Zero-Day Detection</span>
+          <span class="px-2 py-0.5 bg-emerald-50 text-emerald-800 text-[8pt] font-medium rounded border border-emerald-200">Air-Gapped / HAVELSAN Aligned</span>
+        </div>
+
+      </div>
+
+      <!-- Footer Section of Document -->
+      <footer class="mt-8 pt-3 border-t border-slate-200 flex justify-between items-center text-[8.2pt] text-slate-500">
+        <div>
+          <span>Capstone Project Proposal • Computer Engineering</span>
+        </div>
+        <div>
+          <span>Department of Computer Engineering</span>
+        </div>
+      </footer>
+
+    </article>
+  </main>
+
+  <!-- Interactive Logic -->
+  <script>
+    // Automatically set the current live webpage URL if deployed
+    document.addEventListener("DOMContentLoaded", () => {
+      const placeholder = document.getElementById("currentUrlPlaceholder");
+      if (window.location.protocol.startsWith("http")) {
+        placeholder.textContent = window.location.href;
+      } else {
+        placeholder.textContent = "https://[your-username].github.io/astguard-capstone/ (Local preview)";
+      }
+    });
+
+    // Native Print to PDF trigger
+    function triggerPrintPdf() {
+      window.print();
+    }
+
+    // Copy link helper
+    function copyProjectLink() {
+      const urlToCopy = window.location.protocol.startsWith("http") 
+        ? window.location.href 
+        : "https://[your-username].github.io/astguard-capstone/";
+      
+      const textArea = document.createElement("textarea");
+      textArea.value = urlToCopy;
+      document.body.appendChild(textArea);
+      textArea.select();
+      
+      try {
+        document.execCommand('copy');
+        const btnText = document.getElementById("copyBtnText");
+        btnText.textContent = "Link Copied!";
+        setTimeout(() => {
+          btnText.textContent = "Copy Web Link";
+        }, 2200);
+      } catch (err) {
+        console.error('Failed to copy', err);
+      } finally {
+        document.body.removeChild(textArea);
+      }
+    }
+  </script>
+</body>
+</html>
